@@ -12,7 +12,7 @@ STOCK_IMEI="350281371234560"
 # The firmware to be used as source
 MODEL="SM-S938B"
 CSC="EUX"
-IMEI="358636540451126"
+IMEI="356597450035295"
 
 # Extra firmware which is optional
 EXTRA_MODEL=""
