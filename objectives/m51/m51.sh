@@ -10,9 +10,9 @@ STOCK_CSC="EUX"
 STOCK_IMEI="350281371234560"
 
 # The firmware to be used as source
-MODEL="SM-G990B"
+MODEL="SM-S938B"
 CSC="EUX"
-IMEI="353718681234563"
+IMEI="358636540451126"
 
 # Extra firmware which is optional
 EXTRA_MODEL=""

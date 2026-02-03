@@ -81,7 +81,6 @@ rm -rf "$SCRPATH/tree"
 LOG_END
 
 LOG_BEGIN "- Replacing csc partitions with $DEVICE_MODEL"
-ADD_FROM_FW "pa3q" "optics" "configs/carriers"
 find "$WORKSPACE/optics" -type f -exec \
 sed -i -E "s/SM-[A-Z0-9]+/$DEVICE_MODEL/g" {} +
 find "$WORKSPACE/prism" -type f -exec \
