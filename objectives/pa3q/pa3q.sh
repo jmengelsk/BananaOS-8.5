@@ -25,6 +25,7 @@ CODENAME="pa3q"
 
 # Stock firmware details for download
 STOCK_MODEL="SM-S938B"
+DEVICE_VNDK_VERSION="33"
 STOCK_CSC="EUX"
 STOCK_IMEI="356597450035295"
 
