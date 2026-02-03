@@ -131,7 +131,7 @@ CSC_PROP() {
            -o -name "enforceskippingpackages.txt" \) \
         -delete
 
-    REMOVE "prism" "sipdb"
+    REMOVE "prism" "media"
 
     find "$WORKSPACE/prism/HWRDB/data" -type f \
     ! -name '*_en*' \
