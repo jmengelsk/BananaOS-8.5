@@ -140,12 +140,12 @@ CSC_PROP() {
 
     find "$WORKSPACE/prism" -type d -empty -delete
     
-    
-    LOG_BEGIN "- Replacing csc partitions with $DEVICE_MODEL"
+   
+    LOG_BEGIN "- Replacing csc partitions with SM-M515F"
     find "$WORKSPACE/optics" -type f -exec \
-    sed -i -E "s/SM-[A-Z0-9]+/$DEVICE_MODEL/g" {} +
+    sed -i -E "s/SM-[A-Z0-9]+/SM-M515F/g" {} +
     find "$WORKSPACE/prism" -type f -exec \
-    sed -i -E "s/SM-[A-Z0-9]+/$DEVICE_MODEL/g" {} +
+    sed -i -E "s/SM-[A-Z0-9]+/SM-M515F/g" {} +
     sed -i 's/.*/M515FOXM6DXE4/' "$WORKSPACE/prism/etc/CSCVersion.txt"
     xmlstarlet ed -L -u "//CSCName" -v "M515FOXM" "$WORKSPACE/prism/etc/SW_Configuration.xml"
     xmlstarlet ed -L -u "//CSCVersion" -v "6DXE4" "$WORKSPACE/prism/etc/SW_Configuration.xml"
