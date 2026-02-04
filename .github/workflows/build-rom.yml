@@ -81,12 +81,9 @@ jobs:
           PIXELDRAIN_API_KEY: ${{ secrets.PIXELDRAIN_API_KEY }}
         run: |
           cd out
-          ROM_FILE=$(ls *.zip | head -n 1)
-
-          if [ -z "$ROM_FILE" ]; then
-            echo "No ROM zip found!"
-            exit 1
-          fi
-
-          echo "Uploading $ROM_FILE to PixelDrain..."
-          pd --api-key "$PIXELDRAIN_API_KEY" upload "$ROM_FILE" | sed 's|api/file|u|g'
+          prism=$(ls prism.img | head -n 1)
+          optics=$(ls optics.img | head -n 1)
+          echo "Uploading $prism to PixelDrain..."
+          pd --api-key "$PIXELDRAIN_API_KEY" upload "$prism" | sed 's|api/file|u|g'
+          echo "Uploading $optics to PixelDrain..."
+          pd --api-key "$PIXELDRAIN_API_KEY" upload "$optics" | sed 's|api/file|u|g'
