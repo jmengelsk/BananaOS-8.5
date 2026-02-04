@@ -24,6 +24,7 @@
 CODENAME="pa3q"
 
 # Stock firmware details for download
+DEVICE_ACTUAL_MODEL="SM-M515F"
 STOCK_MODEL="SM-S938B"
 DEVICE_VNDK_VERSION="33"
 STOCK_CSC="EUX"
