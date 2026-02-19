@@ -46,6 +46,10 @@ CSC_FEATURES=(
 "CscFeature_Camera_EnableCameraDuringCall|TRUE"
 "CscFeature_Message_SupportUsefulcard|TRUE"
 "CscFeature_NFC_ConfigReaderModeUI|KOREA"
+"CscFeature_Contact_EnableSmartCall|TRUE"
+"CscFeature_Setting_ConfigOperatorCallService|TRUE"
+"CscFeature_Common_ConfigHiyaService|TRUE"
+"CscFeature_Common_SupportRamPlus|TRUE"
 )
 
 
