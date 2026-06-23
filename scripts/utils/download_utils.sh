@@ -139,7 +139,9 @@ FETCH_FW() {
 
     (
         cd "$TEMP_DIR" || exit 1
-        "$PREBUILTS/samfirm/samfirm.js" -m "$DEVICE_MODEL" -r "$REGION_CODE" -i "$DEVICE_IMEI"
+        "$PREBUILTS/samloader/samloader" download --model "$DEVICE_MODEL" --region "$REGION_CODE" -o "firmware.zip"
+        unzip "firmware.zip" -d "$FW_OUTPUT_DIR"
+        rm -f "firmware.zip"
     )
 
     if [[ $? -ne 0 ]]; then
