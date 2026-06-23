@@ -22,7 +22,7 @@ LOG_END
 LOG_BEGIN "- Replacing MIDAS blobs with source"
 REMOVE "vendor" "etc/midas"
 ADD_FROM_FW "main" "vendor" "etc/midas"
-sed -i "s|a73xq|$CODENAME|g" "vendor/etc/midas/midas_config.json"
+sed -i "s|a73xq|$CODENAME|g" "$WORKSPACE/vendor/etc/midas/midas_config.json"
 LOG_END
 
 LOG_BEGIN "- Replacing singletake config files with source"
