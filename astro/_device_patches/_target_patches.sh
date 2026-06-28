@@ -33,7 +33,7 @@ if [[ -n "$ASTRO_CODENAME" ]]; then
 fi
 
 
-if [[ "$MODEL" == "$STOCK_MODEL" ]]; then
+if [[ "$MODEL" == "$DEVICE_ACTUAL_MODEL" ]]; then
     if GET_FEATURE DEVICE_HAVE_QHD_PANEL; then
      ADD_PATCH "framework.jar" "$SCRPATH/resolution/patches/Add-Dynamic-Resolution-Control.sh"
      ADD_FROM_FW "pa3q" "system" "framework/gamemanager.jar"
@@ -46,10 +46,10 @@ else
     fi
 done
     # Set source model as new prop
-    BPROP "system" "ro.product.astro.model" "$STOCK_MODEL"
+    BPROP "system" "ro.product.astro.model" "$DEVICE_ACTUAL_MODEL"
 
     # Edge lighting target corner radius
-    BPROP "system" "ro.factory.model" "$STOCK_MODEL"
+    BPROP "system" "ro.factory.model" "$DEVICE_ACTUAL_MODEL"
 fi
 
 

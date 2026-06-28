@@ -5,7 +5,7 @@ OLD_PROP="ro.product.model"
 NEW_PROP="ro.product.astro.model"
 
 
-BPROP "system" "ro.product.astro.model" "$STOCK_MODEL"
+BPROP "system" "ro.product.astro.model" "$DEVICE_ACTUAL_MODEL"
 
 # Add entries in floating feature
 
@@ -13,7 +13,7 @@ FF "BATTERY_SUPPORT_BSOH_SETTINGS" "TRUE"
 FF "BATTERY_SUPPORT_SBP_INFO_SETTINGS" "TRUE"
 
 
-PLANT_MODEL="$STOCK_MODEL"
+PLANT_MODEL="$DEVICE_ACTUAL_MODEL"
 
 
 find . -type f -name "*.smali" | while read -r smali; do
