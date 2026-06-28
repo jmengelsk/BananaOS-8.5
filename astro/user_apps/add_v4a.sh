@@ -5,8 +5,8 @@ mkdir -p "$TMP_DIR"
 
 # https://github.com/WSTxda/ViPERFX_RE
 V4A_MODULE=$(curl -s ${GITHUB_TOKEN:+-H Authorization: token $GITHUB_TOKEN} \
-    "https://api.github.com/repos/WSTxda/ViPERFX_RE/releases/latest" | \
-    sed -n 's/.*"browser_download_url":[[:space:]]*"\([^"]*viper4android_module[^"]*\.zip\)".*/\1/p' | head -n1)
+    "https://api.github.com/repos/WSTxda/ViPERFX_RE/releases/latest" |
+    grep -o 'https://[^"]*viper4android_module[^"]*\.zip' | head -n1)
 
 SILENT wget -O "$TMP_DIR/viper.zip" "$V4A_MODULE"
 
@@ -42,8 +42,8 @@ done
 
 # https://github.com/WSTxda/ViperFX-RE-Releases
 V4A_APK=$(curl -s ${GITHUB_TOKEN:+-H Authorization: token $GITHUB_TOKEN} \
-    "https://api.github.com/repos/WSTxda/ViperFX-RE-Releases/releases/latest" | \
-    sed -n 's/.*"browser_download_url":[[:space:]]*"\([^"]*\)".*/\1/p' | grep -i 'viper.*\.apk' | head -n1)
+    "https://api.github.com/repos/WSTxda/ViperFX-RE-Releases/releases/latest" |
+    grep -o 'https://[^"]*viper[^"]*\.apk' | head -n1)
 
     mkdir -p "$WORKSPACE/system/system/app/Viper4AndroidFX-RE"
     SILENT wget -O "$WORKSPACE/system/system/app/Viper4AndroidFX-RE/Viper4AndroidFX.apk" "$V4A_APK"
