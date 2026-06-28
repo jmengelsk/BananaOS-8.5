@@ -36,7 +36,7 @@ fi
 if [[ "$MODEL" == "$DEVICE_ACTUAL_MODEL" ]]; then
     if GET_FEATURE DEVICE_HAVE_QHD_PANEL; then
      ADD_PATCH "framework.jar" "$SCRPATH/resolution/patches/Add-Dynamic-Resolution-Control.sh"
-     ADD_FROM_FW "pa3q" "system" "framework/gamemanager.jar"
+#     ADD_FROM_FW "pa3q" "system" "framework/gamemanager.jar"
     fi
 
 else
