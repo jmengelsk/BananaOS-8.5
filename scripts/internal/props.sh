@@ -67,6 +67,61 @@ EOF
     fi
 }
 
+#
+# Usage: FF_FW "TAG" "VALUE"
+# FF_FW "TAG" "" ->> means deletion of line from floating_feature.xml in both WORKSPACE and STOCK_FW
+# Modifies /system/system/etc/floating_feature.xml both in STOCK_FW and WORKSPACE for Samsung-specific features
+#
+FF_FW() {
+    local TAG="$1"
+    local TAG_VALUE="$2"
+    local FF_XML_FILE="${WORKSPACE}/system/system/etc/floating_feature.xml"
+    local FF_FW_XML_FILE="${STOCK_FW}/system/system/etc/floating_feature.xml"
+
+    if ! command -v xmlstarlet &> /dev/null; then
+        ERROR_EXIT "xmlstarlet not found."
+        return 1
+    fi
+
+    _SEC_FF_PREFIX TAG
+
+    if [[ -z "$TAG_VALUE" ]]; then
+        for file in "$FF_XML_FILE" "$FF_FW_XML_FILE"; do
+            if xmlstarlet sel -t -v "//${TAG}" "$file" &>/dev/null; then
+                xmlstarlet ed -L -d "//${TAG}" "$file"
+                LOG "Deleted floating feature: <${TAG}> ($file)"
+            fi
+        done
+        return
+    fi
+
+    for file in "$FF_XML_FILE" "$FF_FW_XML_FILE"; do
+        if [[ ! -f "$file" ]]; then
+            mkdir -p "$(dirname "$file")"
+            cat > "$file" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<SecFloatingFeatureSet>
+</SecFloatingFeatureSet>
+EOF
+            LOG_INFO "Created new floating_feature.xml ($file)"
+        fi
+
+        local current_value
+        current_value=$(xmlstarlet sel -t -v "//${TAG}" "$file" 2>/dev/null || true)
+
+        if [[ -n "$current_value" ]]; then
+            if [[ "$current_value" != "$TAG_VALUE" ]]; then
+                xmlstarlet ed -L -u "//${TAG}" -v "$TAG_VALUE" "$file"
+                LOG "Updated : <${TAG}>${TAG_VALUE}</${TAG}> ($file)"
+            else
+                LOG_INFO "Unchanged : <${TAG}> already set to ${TAG_VALUE} ($file)"
+            fi
+        else
+            xmlstarlet ed -L -s '/SecFloatingFeatureSet' -t elem -n "$TAG" -v "$TAG_VALUE" "$file"
+            LOG "Added : <${TAG}>${TAG_VALUE}</${TAG}> ($file)"
+        fi
+    done
+}
 
 #
 # Samsung floating feature have a common prefix at tag starting. [SEC_FLOATING_FEATURE_]
@@ -279,6 +334,82 @@ if ! mv -f "$tmp_file" "$prop_file"; then
     return 1
 fi
 
+}
+
+#
+# Adds, updates, or deletes entries in a `build.prop` file from a specific partition in both WORKSPACE and STOCK_FW.
+# Usage: BPROP_FW <partition> <tag> <value>
+# To delete a property: BPROP_FW <partition> <tag> ""
+#
+BPROP_FW() {
+    local partition="$1"
+    local tag="$2"
+    local value="$3"
+
+    local ASTRO_MARKER="# Added by AstroROM [scripts/Internal/props.sh]"
+    local END_MARKER="# end of file"
+    local prop_file
+    local root
+
+    if [[ -z "$partition" || -z "$tag" ]]; then
+        ERROR_EXIT "BPROP_FW: Partition and Tag are required."
+        return 1
+    fi
+
+    for root in "$WORKSPACE" "${STOCK_FW:-}"; do
+        [[ -n "$root" ]] || continue
+
+        if ! prop_file=$(_FIND_PROP_IN_PARTITION "$root" "$partition" "$tag"); then
+            prop_file=$(_RESOLVE_PROP_FILE "$root" "$partition")
+        fi
+
+        if [[ -z "$prop_file" || ! -f "$prop_file" ]]; then
+            LOG_INFO "Cannot set property. No build.prop found for partition '$partition' in $root. Skipping ${tag}."
+            continue
+        fi
+
+        local tmp_file
+        tmp_file=$(mktemp)
+        cp "$prop_file" "$tmp_file"
+
+        if [[ -z "$value" ]]; then
+            if grep -q "^${tag}=" "$tmp_file"; then
+                sed -i "/^${tag}=/d" "$tmp_file"
+                LOG "Deleted property from ${partition} (${root}): ${tag}"
+            else
+                LOG_INFO "Property not found in ${partition} (${root}): ${tag} (Nothing to delete)."
+            fi
+
+        elif grep -q "^${tag}=" "$tmp_file"; then
+
+            sed -i "s|^${tag}=.*|${tag}=${value}|" "$tmp_file"
+            LOG_INFO "Updated existing property in ${partition} (${root}): ${tag}=${value}"
+
+        else
+
+            local insert_content=""
+            if ! grep -Fq "$ASTRO_MARKER" "$tmp_file"; then
+                insert_content="${ASTRO_MARKER}\n"
+            fi
+            insert_content="${insert_content}${tag}=${value}"
+
+            if grep -Fq "$END_MARKER" "$tmp_file"; then
+                local end_footer
+                end_footer=$(echo "$END_MARKER" | sed 's/[]\/$*.^[]/\\&/g')
+                sed -i "/$end_footer/i $insert_content" "$tmp_file"
+            else
+                echo -e "$insert_content" >> "$tmp_file"
+            fi
+
+            LOG "Added new property to ${partition} (${root}): ${tag}=${value}"
+        fi
+
+        if ! mv -f "$tmp_file" "$prop_file"; then
+            rm -f "$tmp_file"
+            ERROR_EXIT "Failed to write changes to $prop_file"
+            return 1
+        fi
+    done
 }
 
 #
