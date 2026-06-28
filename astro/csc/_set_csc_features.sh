@@ -1,4 +1,11 @@
-# Thanks to @BlassGO for the idea he used in his dynamic installer csc addons.
+# ==============================================================================
+#
+# MOD_NAME="Add CSC features"
+# MOD_AUTHOR="BlassGO"
+# MOD_DESC="Decodes samsung optics and prism and add csc features and debloat prism."
+#
+# ==============================================================================
+
 
 # Features to add/modify
 # FORMAT: "CSC TAG|VALUE"
@@ -39,6 +46,11 @@ CSC_FEATURES=(
 "CscFeature_Camera_EnableCameraDuringCall|TRUE"
 "CscFeature_Message_SupportUsefulcard|TRUE"
 "CscFeature_NFC_ConfigReaderModeUI|KOREA"
+"CscFeature_Contact_EnableSmartCall|TRUE"
+"CscFeature_Setting_ConfigOperatorCallService|TRUE"
+"CscFeature_Common_ConfigHiyaService|TRUE"
+"CscFeature_Common_SupportRamPlus|TRUE"
+"CscFeature_VoiceCall_ConfigOpStyleForLogs|CnapLog"
 )
 
 
@@ -56,7 +68,7 @@ DECODE_ALL_OMC() {
             continue
         fi
 
-        _UPDATE_LOG "Decoding OMC: ${FILE#$WORKSPACE/}" ""
+        UPDATE_LOG_LINE "Decoding OMC: ${FILE#$WORKSPACE/}" ""
 
         "$PREBUILTS/extras/omc-decoder/omcdecoder" \
             --decode \
@@ -66,7 +78,7 @@ DECODE_ALL_OMC() {
 
     done
 
-    _UPDATE_LOG "Decoding finished." "DONE"
+    UPDATE_LOG_LINE "Decoding finished." "DONE"
     LOG_END "Decoding finished."
 }
 
@@ -107,13 +119,7 @@ CSC_PROP() {
     [[ ! -d "$WORKSPACE/optics" ]] && return 0
 
     LOG_INFO "Patching CSC features..."
-
-find "$WORKSPACE/optics" -type f -exec \
-  sed -i -E "s/SM-[A-Z0-9_-]+/${STOCK_MODEL}/g" {} +
-
-
-    ADD_FROM_FW "pa3q" "optics" "configs/carriers"
-
+    
     # Decode OMC XMLs
     DECODE_ALL_OMC
 
@@ -130,7 +136,7 @@ find "$WORKSPACE/optics" -type f -exec \
            -o -name "enforceskippingpackages.txt" \) \
         -delete
 
-    REMOVE "prism" "sipdb"
+    REMOVE "prism" "media"
 
     find "$WORKSPACE/prism/HWRDB/data" -type f \
     ! -name '*_en*' \
@@ -138,5 +144,17 @@ find "$WORKSPACE/optics" -type f -exec \
     -delete
 
     find "$WORKSPACE/prism" -type d -empty -delete
-
+    
+   
+    LOG_BEGIN "- Replacing csc partitions with SM-M515F"
+    find "$WORKSPACE/optics" -type f -exec \
+    sed -i -E "s/SM-[A-Z0-9]+/SM-M515F/g" {} +
+    find "$WORKSPACE/prism" -type f -exec \
+    sed -i -E "s/SM-[A-Z0-9]+/SM-M515F/g" {} +
+    sed -i 's/.*/M515FOXM6DXE4/' "$WORKSPACE/prism/etc/CSCVersion.txt"
+    xmlstarlet ed -L -u "//CSCName" -v "M515FOXM" "$WORKSPACE/prism/etc/SW_Configuration.xml"
+    xmlstarlet ed -L -u "//CSCVersion" -v "6DXE4" "$WORKSPACE/prism/etc/SW_Configuration.xml"
+    LOG_END
+    
+        
 LOG_END "CSC patches applied "
