@@ -53,10 +53,12 @@ else
 
         for pkg in "${AIR_COMMAND_PKGS[@]}"; do
 #            ADD_FROM_FW "pa3q" "system" "priv-app/$pkg"
+              echo "0"
         done
 
         for file in "${AIR_COMMAND_FILES[@]}"; do
 #            ADD_FROM_FW "pa3q" "system" "$file"
+             echo "0"
         done
 
         FF "SUPPORT_EAGLE_EYE" "TRUE"
