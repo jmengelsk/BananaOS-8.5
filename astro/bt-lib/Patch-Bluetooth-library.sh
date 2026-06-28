@@ -1,9 +1,6 @@
 if [ ! -f "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" ]; then
     LOG_BEGIN "- Extracting libbluetooth_jni.so from com.android.bt.apex"
-
-    if [ -d "$TMP_DIR" ]; then
-        rm -rf "$TMP_DIR"
-    fi
+    local TMP_DIR="/tmp/bt"
     mkdir -p "$TMP_DIR"
 
     unzip -j "$WORKSPACE/system/system/apex/com.android.bt.apex" "apex_payload.img" -d "$TMP_DIR"
