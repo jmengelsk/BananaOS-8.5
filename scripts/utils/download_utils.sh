@@ -125,11 +125,10 @@ rm -rf "$tmp" && mkdir -p "$tmp"
 
 (
   cd "$tmp" 
-  "$PREBUILTS/samloader/samloader" download --model "$DEVICE_MODEL" --region "$REGION_CODE" -o "firmware.zip"
+  "$PREBUILTS/samloader/samloader" download --model "$mod" --region "$reg" -o "firmware.zip"
         unzip "firmware.zip" -d "$FW_OUT_DIR"
         rm -f "firmware.zip"
 )
-
 
 if [[ $? -ne 0 ]]; then
     ERROR_EXIT "Failed to download the firmware for $mod ($reg)"
