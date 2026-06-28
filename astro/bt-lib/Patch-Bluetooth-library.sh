@@ -1,77 +1,53 @@
-BT_LIB_PATCH() {
-    local APEX_FILE APEX_REL SDK_VERSION PATCH_APPLIED=false
-    local LIB_PATH="system/system/lib64/libbluetooth_jni.so"
+if [ ! -f "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" ]; then
+    LOG_BEGIN "- Extracting libbluetooth_jni.so from com.android.bt.apex"
 
+    if [ -d "$TMP_DIR" ]; then
+        rm -rf "$TMP_DIR"
+    fi
+    mkdir -p "$TMP_DIR"
 
-    APEX_FILE=$(find "$WORKSPACE/system/system/apex" -name "com.android.bt*.apex" 2>/dev/null | head -n1)
-    [[ -z "$APEX_FILE" ]] && ERROR_EXIT "No Bluetooth APEX found"
+    unzip -j "$WORKSPACE/system/system/apex/com.android.bt.apex" "apex_payload.img" -d "$TMP_DIR"
 
-    APEX_REL="${APEX_FILE#$WORKSPACE/}"
+    if command -v debugfs &> /dev/null; then
+        debugfs -R "dump /lib64/libbluetooth_jni.so $TMP_DIR/libbluetooth_jni.so" "$TMP_DIR/apex_payload.img"
+        cp -f "$TMP_DIR/libbluetooth_jni.so" "$WORKSPACE/system/system/lib64/libbluetooth_jni.so"
+    else
+        if ! sudo -n -v &> /dev/null; then
+            LOG "\033[0;33m! Asking user for sudo password\033[0m"
+            if ! sudo -v 2> /dev/null; then
+                ERROR_EXIT "Root permissions are required to unpack APEX image"
+            fi
+        fi
 
+        mkdir -p "$TMP_DIR/tmp_out"
+        sudo mount -o ro "$TMP_DIR/apex_payload.img" "$TMP_DIR/tmp_out"
+        sudo cat "$TMP_DIR/tmp_out/lib64/libbluetooth_jni.so" > "$WORKSPACE/system/system/lib64/libbluetooth_jni.so"
+        sudo umount "$TMP_DIR/tmp_out"
+    fi
 
-    EXTRACT_FROM_APEX_PAYLOAD "$APEX_REL" \
-        "lib64/libbluetooth_jni.so" \
-        "$LIB_PATH"
+    rm -rf "$TMP_DIR"
+    
+    LOG_END
+fi
 
-
-    [[ ! -f "$WORKSPACE/$LIB_PATH" ]] && ERROR_EXIT "Bluetooth JNI library not extracted"
-
-    SDK_VERSION="$(GET_PROP "system" "ro.build.version.sdk")"
-
-    LOG_INFO "Detected SDK version: $SDK_VERSION"
-
-    case "$SDK_VERSION" in
-        33)
-            HEX_EDIT "$LIB_PATH" \
-                "6804003528008052" \
-                "2a00001428008052" \
-                && PATCH_APPLIED=true
-            ;;
-        34)
-            HEX_EDIT "$LIB_PATH" \
-                "6804003528008052" \
-                "2b00001428008052" \
-                && PATCH_APPLIED=true
-            ;;
-        35)
-            HEX_EDIT "$LIB_PATH" \
-                "480500352800805228" \
-                "530100142800805228" \
-                && PATCH_APPLIED=true
-            ;;
-        36)
-            local PATCHES=(
-            "00122a0140395f01086b00020054 00122a0140395f01086bde030014"
-            "2897773948050037 289777392a000014"
-            "183a009048050037 183a00902a000014"
-            "3a009048050037330080 3a00902a000014330080"
-            "f6713948050037330080 f671392a000014330080"
-        )
-
-    for p in "${PATCHES[@]}"; do
-        set -- $p
-        HEX_EDIT "$LIB_PATH" "$1" "$2" && {
-            PATCH_APPLIED=true
-            break
-        }
-    done
-            ;;
-        *)
-            ERROR_EXIT "Unsupported SDK version: $SDK_VERSION"
-            ;;
-    esac
-
-    [[ "$PATCH_APPLIED" != true ]] && \
-        ERROR_EXIT "No patch available for Bluetooth library (SDK $SDK_VERSION)"
-    return 0
-}
-
-
-
-if ! EXISTS "system" "lib64/libbluetooth_jni.so"; then
-    LOG_BEGIN "Applying Bluetooth library patch"
-
-    BT_LIB_PATCH || ERROR_EXIT "Bluetooth patching failed"
-
-    LOG_END "Bluetooth library patch applied successfully"
+# Disable VaultKeeper support
+# Before: [tbnz w8, #0, #0xXXXXXX]
+# After: [b #0xXXXXXX]
+if xxd -p -c 0 "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" | grep -q "39d9199428518152"; then
+    HEX_EDIT "system/system/lib64/libbluetooth_jni.so" \
+        "39d9199428518152" "000080d228518152"
+elif xxd -p -c 0 "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" | grep -q "2897773948050037"; then
+    HEX_EDIT "system/system/lib64/libbluetooth_jni.so" \
+        "2897773948050037" "289777392a000014"
+elif xxd -p -c 0 "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" | grep -q "183a009048050037"; then
+    HEX_EDIT "system/system/lib64/libbluetooth_jni.so" \
+        "183a009048050037" "183a00902a000014"
+elif xxd -p -c 0 "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" | grep -q "88f6713948050037"; then
+    HEX_EDIT "system/system/lib64/libbluetooth_jni.so" \
+        "88f6713948050037" "88f671392a000014"
+elif xxd -p -c 0 "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" | grep -q "2897663948050037"; then
+    HEX_EDIT "system/system/lib64/libbluetooth_jni.so" \
+        "2897663948050037" "289766392a000014"
+else
+    ERROR_EXIT "No known patch available for the supplied libbluetooth_jni.so"
 fi
