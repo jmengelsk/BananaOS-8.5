@@ -46,5 +46,5 @@ elif xxd -p -c 0 "$WORKSPACE/system/system/lib64/libbluetooth_jni.so" | grep -q 
     HEX_EDIT "system/system/lib64/libbluetooth_jni.so" \
         "2897663948050037" "289766392a000014"
 else
-    ERROR_EXIT "No known patch available for the supplied libbluetooth_jni.so"
+    LOG_WARN "No known patch available for the supplied libbluetooth_jni.so"
 fi
