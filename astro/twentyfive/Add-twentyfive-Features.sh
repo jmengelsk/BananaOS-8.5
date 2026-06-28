@@ -171,10 +171,10 @@ FF "MSCH_SUPPORT_NLSEARCH" "TRUE"
 
 
 # S23 Ultra have same HFR modes and features S25U have
-if [ "$CODENAME" = "dm3q" ]; then
+# if [ "$CODENAME" = "dm3q" ]; then
     #ADD_FROM_FW "pa3q" "system" "priv-app/SecSettings"
     #ADD_FROM_FW "pa3q" "system" "priv-app/SettingsProvider"
-fi
+# fi
     #ADD_FROM_FW "pa3q" "system" "priv-app/SecSettingsIntelligence"
 
 
