@@ -28,7 +28,7 @@ if [[ "$SOURCE_SINGLE_SYSTEM_IMAGE" == *64* ]]; then
         "
 
         for blob in $BLOBS_LIST; do
-            ADD_FROM_FW "dm3q" "system" "$blob"
+            #ADD_FROM_FW "dm3q" "system" "$blob"
         done
 
         SOURCE_SDK="$(GET_PROP system ro.build.version.sdk)"
@@ -48,10 +48,10 @@ if [[ "$SOURCE_SINGLE_SYSTEM_IMAGE" == *64* ]]; then
             LOG_INFO "Using 32 bit prebuilts libraries.."
 
     if [[ "$DEVICE_SINGLE_SYSTEM_IMAGE" == qssi* ]]; then
-        ADD_FROM_FW "dm3q" "system" "lib"
-        ADD_FROM_FW "dm3q" "system" "lib64/lib.engmode.samsung.so"
-        ADD_FROM_FW "dm3q" "system" "lib64/lib.engmodejni.samsung.so"
-        ADD_FROM_FW "dm3q" "system" "lib64/vendor.samsung.hardware.security.engmode@1.0.so"
+        #ADD_FROM_FW "dm3q" "system" "lib"
+        #ADD_FROM_FW "dm3q" "system" "lib64/lib.engmode.samsung.so"
+        #ADD_FROM_FW "dm3q" "system" "lib64/lib.engmodejni.samsung.so"
+        #ADD_FROM_FW "dm3q" "system" "lib64/vendor.samsung.hardware.security.engmode@1.0.so"
     else
         ADD_FROM_FW "r11s" "system" "lib"
         ADD_FROM_FW "r11s" "system" "lib64/lib.engmode.samsung.so"
