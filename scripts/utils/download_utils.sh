@@ -125,7 +125,9 @@ rm -rf "$tmp" && mkdir -p "$tmp"
 
 (
   cd "$tmp" 
-  "$PREBUILTS/samfirm/samfirm.js" -m "$mod" -r "$reg" -i "$imei"
+  "$PREBUILTS/samloader/samloader" download --model "$DEVICE_MODEL" --region "$REGION_CODE" -o "firmware.zip"
+        unzip "firmware.zip" -d "$FW_OUTPUT_DIR"
+        rm -f "firmware.zip"
 )
 
 
