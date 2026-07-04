@@ -70,6 +70,9 @@ SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.sec.bcservice.xm
 # GAME HUB
 BLOAT_TARGETS+=("GameHome")
 
+# SetupWizard
+BLOAT_TARGETS+=("SetupWizard")
+
 SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.game.gamehome.xml"
 # Note: Signature permissions usually handled by PackageManager, but removing file works too
 SILENT REMOVE "system" "etc/permissions/signature-permissions-com.samsung.android.game.gamehome.xml"
