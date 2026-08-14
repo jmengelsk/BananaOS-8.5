@@ -10,10 +10,7 @@
 
 # Set target model name
 FF_IF_DIFF "stock" "SETTINGS_CONFIG_BRAND_NAME"
-FF_IF_DIFF "stock" "SYSTEM_CONFIG_SIOP_POLICY_FILENAME"
-
-BPROP "system" "ro.product.system.model" "$DEVICE_MODEL"
-BPROP "system" "ro.product.product.model" "$DEVICE_MODEL"
+FF "SYSTEM_CONFIG_SIOP_POLICY_FILENAME" "$DEVICE_SIOP_POLICY_FILENAME"
 
 ASTRO_CODENAME="$(GET_PROP "system" "ro.product.system.name" "stock")"
 
@@ -34,4 +31,4 @@ FF_IF_DIFF "stock" "COMMON_CONFIG_MDNIE_MODE"
 FF_IF_DIFF "stock" "LCD_SUPPORT_AMOLED_DISPLAY"
 
 # Netflix props
-BPROP_IF_DIFF "stock" "system" "ro.netflix.bsp_rev"
+BPROP "system" "ro.netflix.bsp_rev" "$(GET_PROP "vendor" "ro.netflix.bsp_rev" "stock")"
