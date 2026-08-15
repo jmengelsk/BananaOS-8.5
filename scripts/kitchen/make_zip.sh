@@ -95,16 +95,16 @@ CREATE_FLASHABLE_ZIP()
 
     rm -rf "${ZIP_BUILD_DIR}"
 
-    LOG_INFO "Signing ZIP.."
-    java -jar "${PREBUILTS}/signapk/signapk.jar" -w \
-        "${PREBUILTS}/signapk/keys/aosp_testkey.x509.pem" \
-        "${PREBUILTS}/signapk/keys/aosp_testkey.pk8" \
-        "$UNSIGNED_ZIP_PATH" \
-        "$SIGNED_ZIP_PATH" \
-        || ERROR_EXIT "Signing failed"
+    # LOG_INFO "Signing ZIP.."
+    # java -jar "${PREBUILTS}/signapk/signapk.jar" -w \
+        # "${PREBUILTS}/signapk/keys/aosp_testkey.x509.pem" \
+        # "${PREBUILTS}/signapk/keys/aosp_testkey.pk8" \
+        # "$UNSIGNED_ZIP_PATH" \
+        # "$SIGNED_ZIP_PATH" \
+        # || ERROR_EXIT "Signing failed"
 
-    rm -f "${UNSIGNED_ZIP_PATH}"
-    LOG_END "Flashable zip created at $(basename "${SIGNED_ZIP_PATH}")"
+    # rm -f "${UNSIGNED_ZIP_PATH}"
+    # LOG_END "Flashable zip created at $(basename "${SIGNED_ZIP_PATH}")"
 }
 
 
