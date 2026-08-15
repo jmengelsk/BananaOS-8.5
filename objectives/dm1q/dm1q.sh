@@ -35,8 +35,8 @@ CSC="EUX"
 IMEI="352404911234563"
 
 # Extra firmware (Optional) details for download
-EXTRA_MODEL=""
-EXTRA_CSC=""
+EXTRA_MODEL="SM-S948B"
+EXTRA_CSC="EUX"
 EXTRA_IMEI=""
 
 # Output
