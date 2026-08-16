@@ -61,7 +61,13 @@ jobs:
           echo "${{ secrets.SF_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan frs.sourceforge.net >> ~/.ssh/known_hosts
-          for ROM in out/SpiderGirl*.zip; do
+          cd out
+          ROM=$(ls *.zip | head -n 1)
+          if [ -z "$ROM" ]; then
+            echo "No ROM zip found!"
+            exit 1
+          fi          
+          for ROM in SpiderGirl*.zip; do
             echo "Uploading $ROM to SourceForge..."
             scp -i ~/.ssh/id_rsa $ROM $SF_M51_PATH
           done
