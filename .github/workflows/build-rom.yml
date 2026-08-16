@@ -4,14 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       device:
-        description: 'Choose objective'
+        description: 'Choose device'
         required: true
-        default: ''
-      upload_cloud:
-        description: 'Upload ROM to cloud (PixelDrain)'
-        required: false
-        default: false
-        type: boolean
+        default: 'm51'
 
 jobs:
   build:
