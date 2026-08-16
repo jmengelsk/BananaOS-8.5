@@ -61,7 +61,7 @@ jobs:
           echo "${{ secrets.SF_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan frs.sourceforge.net >> ~/.ssh/known_hosts
-          for ROM in out/Spider*.zip; do
+          for ROM in out/Banana*.zip; do
             echo "Uploading $ROM to SourceForge..."
             scp -i ~/.ssh/id_rsa $ROM $SF_M51_PATH           
           done
