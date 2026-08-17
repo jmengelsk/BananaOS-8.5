@@ -33,7 +33,7 @@ CREATE_FLASHABLE_ZIP()
     local EXTRA_BLOCKS=""
 
     BUILD_DATE="$(date +%Y%m%d)"
-    ZIP_NAME_PREFIX="BananaOS_${CODENAME}_v${ROM_VERSION}_${BUILD_DATE}"
+    ZIP_NAME_PREFIX="BananaOS_v${ROM_VERSION}_${CODENAME}_${BUILD_DATE}"
 
     SUPER_IMAGE_PATH="${DIROUT}/super.img"
     ZIP_BUILD_DIR="${DIROUT}/zip_build"

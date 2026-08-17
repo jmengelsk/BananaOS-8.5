@@ -20,7 +20,7 @@ set -o pipefail
 ASTROROM="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export ASTROROM
 
-ROM_VERSION="8.5.JoJo"
+ROM_VERSION="8.5.00.JoJo"
 
 BETA_ASSERT=0
 BETA_OTA_URL=""

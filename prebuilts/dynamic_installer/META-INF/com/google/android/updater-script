@@ -4,13 +4,13 @@ setdefault   extraction_speed     default
 
 #AstroROM script starts here:
 ui_print " "
-ui_print "Welcome to AstroROM Installer!"
+ui_print "Welcome to BananaOS Installer!"
 ui_print " "
-ui_print "SpiderGirl OS  __ROM_VERSION__  for __MODEL_NAME__  "
+ui_print "BananaOS  __ROM_VERSION__  for __MODEL_NAME__  "
 ui_print " "
 ui_print "AstroROM is coded by @SameerAlSahab "
 ui_print " "
-ui_print "SpiderGirl OS is developed by @mehedihjoy0 "
+ui_print "based on SpiderGirl OS by @mehedihjoy0 "
 ui_print " "
 ui_print "Build: __BUILD_DATE__"
 
@@ -36,7 +36,7 @@ fi
 
 __EXTRA_ASSERTS__
 
-   ui_print "SpiderGirl OS successfully installed."
+   ui_print "BananaOS successfully installed."
 
 
 # Ending

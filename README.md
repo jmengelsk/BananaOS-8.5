@@ -1,3 +1,8 @@
+## About BananaOS
+
+BananaOS is a fork of SpiderGirl OS  which brings OneUI 8.5 for several devices. Feel free to contribute!
+
+
 
 ## About AstroROM
 
@@ -11,7 +16,7 @@ SpiderGirl OS is a fork of AstroROM which brings OneUI 8.5 for several devices. 
 
 To create a universal, hassle-free ROM modification solution that will auto patch any samsung firmware and create a flashable zip.
 
-![Logo](readme/spidergirl_banner.jpg)
+![Logo](readme/banner.png)
 
 <p align="center">
   <a href="https://github.com/SameerAlSahab/ProjectAstro/blob/main/LICENSE"><img src="https://img.shields.io/github/license/SameerAlSahab/ProjectAstro?style=for-the-badge&logo=github"/></a>

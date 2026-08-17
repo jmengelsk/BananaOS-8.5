@@ -4,6 +4,12 @@ REMOVE "product" "priv-app/HotwordEnrollment*"
 #ADD_FROM_FW "a73xq" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON"
 LOG_END
 
+LOG_BEGIN "- Replacing bootanimation"
+REMOVE "system" "system/media/bootsamsung*"
+ADD_FROM_FW "m51" "system" "media/bootsamsung.qmg"
+ADD_FROM_FW "m51" "system" "media/bootsamsungloop.qmg"
+LOG_END
+
 LOG_BEGIN "- Adding light blobs from source"
 ADD_FROM_FW "main" "vendor" "bin/hw/vendor.samsung.hardware.light-service"
 ADD_CONTEXT "vendor" "bin/hw/vendor.samsung.hardware.light-service" "hal_light_default_exec"

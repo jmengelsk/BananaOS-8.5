@@ -99,7 +99,7 @@ sed -i 's|atoll|sm6150|g' "$WORKSPACE/vendor/etc/vramdiskd.xml"
 LOG_END
 
 LOG_BEGIN "- Injecting m51-specific blobs"
-git clone https://github.com/mehedihjoy0/M51-Device-Tree $SCRPATH/tree
+#git clone https://github.com/mehedihjoy0/M51-Device-Tree $SCRPATH/tree
 cp -r "$SCRPATH/tree/system/"* "$WORKSPACE/system/system"
 cp -r "$WORKSPACE/system/system/build.prop" "$STOCK_FW/system/system"
 cp -r "$WORKSPACE/system/system/etc/floating_feature.xml" "$STOCK_FW/system/system/etc"
@@ -108,7 +108,7 @@ cp -r "$SCRPATH/tree/vendor/"* "$WORKSPACE/vendor"
 cp -r "$WORKSPACE/vendor/build.prop" "$STOCK_FW/vendor"
 cp -r "$WORKSPACE/vendor/etc/floating_feature.xml" "$STOCK_FW/vendor/etc"
 cp -r "$WORKSPACE/vendor/etc/media_profiles_V1_0.xml" "$WORKSPACE/odm/etc"
-rm -rf "$SCRPATH/tree"
+# rm -rf "$SCRPATH/tree"
 LOG_END
 
 LOG_BEGIN "- Adding contexts"
