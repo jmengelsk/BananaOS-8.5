@@ -77,18 +77,13 @@ SILENT REMOVE "system" "etc/permissions/signature-permissions-com.samsung.androi
 
 #  GOOGLE APPS & OVERLAYS
 BLOAT_TARGETS+=(
-    "BardShell"           # Gemini App
     "Gmail2"
-    "AssistantShell"
-    "Chrome"
-    "DuoStub"
-    "Maps"
     "PlayAutoInstallConfig" # PAI
     "YouTube"
     "Messages"
 )
 
-SILENT REMOVE "product" "overlay/GmsConfigOverlaySearchSelector.apk"
+#SILENT REMOVE "product" "overlay/GmsConfigOverlaySearchSelector.apk"
 
 
 #  FACTORY & TEST TOOLS (HwModuleTest)
@@ -140,9 +135,9 @@ SILENT REMOVE "system" "etc/sysconfig/meta-hiddenapi-package-allowlist.xml"
 
 
 #  MICROSOFT
-BLOAT_TARGETS+=("OneDrive_Samsung_v3")
+#BLOAT_TARGETS+=("OneDrive_Samsung_v3")
 
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.microsoft.skydrive.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.microsoft.skydrive.xml"
 
 
 #  SAMSUNG ANALYTICS & MY GALAXY
@@ -163,21 +158,19 @@ SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.sec.android.soag
 
 
 #  SAMSUNG AR EMOJI
-BLOAT_TARGETS+=(
-    "AREmojiEditor"
-    "AvatarEmojiSticker"
-)
+#BLOAT_TARGETS+=(
+#    "AREmojiEditor"
+#    "AvatarEmojiSticker"
+#)
 
-SILENT REMOVE "system" "etc/default-permissions/default-permissions-com.sec.android.mimage.avatarstickers.xml"
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.aremojieditor.xml"
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.sec.android.mimage.avatarstickers.xml"
-SILENT REMOVE "system" "etc/permissions/signature-permissions-com.sec.android.mimage.avatarstickers.xml"
+#SILENT REMOVE "system" "etc/default-permissions/default-permissions-com.sec.android.mimage.avatarstickers.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.aremojieditor.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.sec.android.mimage.avatarstickers.xml"
+#SILENT REMOVE "system" "etc/permissions/signature-permissions-com.sec.android.mimage.avatarstickers.xml"
 
 
 #  SAMSUNG APPS (Calendar, Clock, Free, Notes, Browser & Reminder)
 BLOAT_TARGETS+=(
-    "SamsungCalendar"
-    "ClockPackage"
     "MinusOnePage"            # Samsung Free
     "SmartReminder"
     "OfflineLanguageModel_stub"
@@ -186,8 +179,8 @@ BLOAT_TARGETS+=(
 )
 
 SILENT REMOVE "system" "etc/permissions/signature-permissions-com.samsung.android.offline.languagemodel.xml"
-SILENT REMOVE "system" "etc/default-permissions/default-permissions-com.samsung.android.messaging.xml"
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.messaging.xml"
+#SILENT REMOVE "system" "etc/default-permissions/default-permissions-com.samsung.android.messaging.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.messaging.xml"
 
 
 #  SAMSUNG PASS & AUTH
@@ -236,22 +229,18 @@ SILENT REMOVE "system_ext" "framework/org.carconnectivity.android.digitalkey.sec
 
 
 BLOAT_TARGETS+=(
-    "SearchSelector"
-    "SHClient"           # SettingsHelper
-    "SmartTouchCall"
     "SmartTutor"
     "FotaAgent"          # Software Update
     "SVCAgent"
     "SVoiceIME"
-    "wssyncmldm"
 )
 
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.settingshelper.xml"
-SILENT REMOVE "system" "etc/sysconfig/settingshelper.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.settingshelper.xml"
+#SILENT REMOVE "system" "etc/sysconfig/settingshelper.xml"
 SILENT REMOVE "system" "etc/default-permissions/default-permissions-com.samsung.android.visualars.xml"
 SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.visualars.xml"
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.wssyncmldm.xml"
-SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.svcagent.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.wssyncmldm.xml"
+#SILENT REMOVE "system" "etc/permissions/privapp-permissions-com.samsung.android.svcagent.xml"
 
 # SIM UNLOCK SERVICE
 BLOAT_TARGETS+=("SsuService")
