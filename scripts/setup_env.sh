@@ -17,7 +17,7 @@
 
 # [
 DEPENDENCY_CONFIG=(
-    "openjdk-17-jdk|jdk17-openjdk|Java 17+ (Java is required for APK/JAR patching)|true"
+    "openjdk-21-jdk|jdk21-openjdk|Java 21+ (Java is required for APK/JAR patching)|true"
     "python3|python|Python 3 (For Python modules)|true"
     "xmlstarlet|xmlstarlet|xmlstarlet for editing xml files|true"
     "lz4|lz4|LZ4 for decompress and compress|true"
