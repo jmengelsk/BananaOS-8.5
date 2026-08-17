@@ -1,7 +1,7 @@
 LOG_BEGIN "- Adding Google Hotword Enrollment blobs from a73xq"
 REMOVE "product" "priv-app/HotwordEnrollment*"
-ADD_FROM_FW "a73xq" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGON"
-ADD_FROM_FW "a73xq" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON"
+#ADD_FROM_FW "a73xq" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGON"
+#ADD_FROM_FW "a73xq" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON"
 LOG_END
 
 LOG_BEGIN "- Adding light blobs from source"
